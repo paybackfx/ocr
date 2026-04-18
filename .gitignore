@@ -1,0 +1,103 @@
+# ─────────────────────────────────────────────
+#  Python
+# ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+*.egg
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.log
+
+# ─────────────────────────────────────────────
+#  Node / React / Vite
+# ─────────────────────────────────────────────
+node_modules/
+dist/
+.cache/
+*.tsbuildinfo
+.eslintcache
+
+# ─────────────────────────────────────────────
+#  Environment & secrets
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.secret
+secrets/
+
+# ─────────────────────────────────────────────
+#  YOLO / ML model weights  (fichiers lourds!)
+# ─────────────────────────────────────────────
+*.pt
+*.pth
+*.onnx
+*.weights
+*.h5
+*.pkl
+*.pb
+runs/
+wandb/
+
+# ─────────────────────────────────────────────
+#  Caddy runtime data (SSL certs, config state)
+# ─────────────────────────────────────────────
+caddy_data/
+caddy_config/
+
+# ─────────────────────────────────────────────
+#  Docker volumes & runtime
+# ─────────────────────────────────────────────
+n8n_data/
+postgres_data/
+redis_data/
+*.pid
+
+# ─────────────────────────────────────────────
+#  Test / sample images & uploads
+# ─────────────────────────────────────────────
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+# (garde les images de doc si tu en as besoin)
+!docs/**/*.png
+!docs/**/*.jpg
+!**/public/**/*.png
+!**/public/**/*.jpg
+!**/public/**/*.svg
+
+# ─────────────────────────────────────────────
+#  n8n Workflows (proprietary logic)
+# ─────────────────────────────────────────────
+**/init-workflows/workflow.json
+**/init-workflows/*.json
+**/reconcile_engine.py
+
+# ─────────────────────────────────────────────
+#  OS & editors
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*backup*
+*.bak
+

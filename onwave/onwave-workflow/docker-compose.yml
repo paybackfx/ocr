@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  # FastAPI + OpenCV + YOLO (best_a4.pt) + Reconciliation Engine
+  opencv-api:
+    build:
+      context: ../opencv-scanner
+      dockerfile: Dockerfile
+    container_name: onwave-opencv
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    volumes:
+      - ../opencv-scanner:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # n8n — Workflow Orchestrator
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: onwave-n8n
+    restart: unless-stopped
+    ports:
+      - "5679:5678"
+    entrypoint: /bin/sh -c "n8n import:workflow --input=/home/node/workflows/workflow.json || true; n8n update:workflow --id=Rd8gzN1nKxT038Dq --active=true || true; exec /docker-entrypoint.sh"
+    environment:
+      - N8N_HOST=n8n
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://n8n:5678/
+      - GENERIC_TIMEZONE=Africa/Casablanca
+      - N8N_SECURE_COOKIE=false
+    volumes:
+      - onwave_n8n_data:/home/node/.n8n
+      - ./init-workflows:/home/node/workflows
+
+  # React GUI — OnWave Frontend
+  react-gui:
+    build:
+      context: ./react-gui
+      dockerfile: Dockerfile
+    container_name: onwave-react
+    restart: unless-stopped
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./react-gui:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://n8n:5678
+      - VITE_OPENCV_API_URL=http://opencv-api:8000
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - n8n
+      - opencv-api
+
+volumes:
+  onwave_n8n_data:

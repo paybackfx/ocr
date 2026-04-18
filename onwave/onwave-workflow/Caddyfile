@@ -1,0 +1,6 @@
+ocr-imtiaz.duckdns.org {
+    reverse_proxy streamlit-gui:8501
+}
+n8n-imtiaz.duckdns.org {
+    reverse_proxy n8n:5678
+}

@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  # FastAPI + OpenCV Optimizer
+  opencv-api:
+    build:
+      context: ../opencv-scanner
+      dockerfile: Dockerfile
+    container_name: openrouter-workflow-opencv
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../opencv-scanner:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # n8n
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: openrouter-workflow-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    entrypoint: /bin/sh -c "n8n import:workflow --input=/home/node/workflows/workflow.json || true; n8n update:workflow --id=Rd8gzN1nKxT038Dq --active=true || true; exec /docker-entrypoint.sh"
+    environment:
+      - N8N_HOST=n8n
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://n8n:5678/
+      - GENERIC_TIMEZONE=Africa/Casablanca
+      - N8N_SECURE_COOKIE=false
+
+    volumes:
+      - openrouter-workflow_data:/home/node/.n8n
+      - ./init-workflows:/home/node/workflows
+
+  # Streamlit GUI (Archivé - Remplacé par React)
+  # streamlit-gui:
+  #   build:
+  #     context: ./streamlit-gui
+  #     dockerfile: Dockerfile
+  #   container_name: openrouter-workflow-gui
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8501:8501"
+  #   volumes:
+  #     - ./streamlit-gui:/app
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   depends_on:
+  #     - n8n
+  #     - opencv-api
+
+  # React GUI (Nouveau Frontend)
+  react-gui:
+    build:
+      context: ./react-gui
+      dockerfile: Dockerfile
+    container_name: openrouter-workflow-react
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./react-gui:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://n8n:5678
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - n8n
+
+volumes:
+  openrouter-workflow_data:

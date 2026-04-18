@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-imtiaz-dark text-white font-sans antialiased min-h-screen;
+    margin: 0;
+  }
+}
+
+@layer components {
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.imtiaz.dark'); 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.imtiaz.card'); 
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.imtiaz.blue' / 50%); 
+  }
+}
+
+.pdf-page-canvas {
+  margin: 0 auto;
+}
