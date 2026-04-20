@@ -49,13 +49,13 @@ Extracts structured data from Moroccan insurance documents with high accuracy.
 ```
 📄 Document Upload
         ↓
-🔍 YOLO v8  →  Page detection & auto-crop
+🔍 Page detection & auto-crop
         ↓
-🖼️  OpenCV  →  Image enhancement & optimization
+🖼️  Image enhancement & optimization
         ↓
-🤖  Gemini / OpenRouter AI  →  Text extraction & structuring
+🤖 →  Text extraction & structuring
         ↓
-⚙️  n8n  →  Workflow orchestration & business logic
+⚙️ Workflow orchestration & business logic
         ↓
 ✅  Structured JSON output  →  Your system
 ```
