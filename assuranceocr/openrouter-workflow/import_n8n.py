@@ -1,7 +1,7 @@
 import json, urllib.request
 
 # 1. Lire le fichier
-with open('/home/sirfennoune/dassoliocr/openrouter-workflow/init-workflows/workflow.json', 'r') as f:
+with open('/home/sirfennoune/assuranceocr/openrouter-workflow/init-workflows/workflow.json', 'r') as f:
     wf = json.load(f)[0] # Prend le premier workflow du tableau
 
 # 2. Préparer les données pour n8n

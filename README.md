@@ -32,7 +32,7 @@ Reads invoices and bank statements → automatically generates **PCGM-compliant 
 - Flags unmatched items for human review
 - Processes Arabic, French, and mixed-language documents
 
-### 🪪 DassouliOCR — Insurance Document Processing
+### 🪪 AssuranceOCR — Insurance Document Processing
 > *For insurance companies, brokers, and agencies*
 
 Extracts structured data from Moroccan insurance documents with high accuracy.
